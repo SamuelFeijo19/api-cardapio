@@ -16,10 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login'])->name('login'); // Adicionando o nome da rota
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/auth/register', [AuthController::class, 'createUser']);
+Route::post('/auth/login', [AuthController::class, 'loginUser'])->name('login');
 
-Route::post('/register-admin', [AdminUserController::class, 'registerAdminUser']);
 
 // Grupo de rotas protegidas pelo middleware 'auth:sanctum'
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -27,8 +26,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/hello', function (Request $request) {
         return response()->json(['message' => 'Hello, authenticated user!']);
     });
-
-    // Outras rotas protegidas...
 
     // Exemplo: Obter detalhes do usuário autenticado
     Route::get('/user', function (Request $request) {
