@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingrediente;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 
@@ -71,6 +72,44 @@ class ProdutoController extends Controller
         $produto->delete();
 
         return response()->json(['message' => 'Produto removido com sucesso']);
+    }
+
+    public function adicionarIngrediente($produto_id, $ingrediente_id)
+    {
+        $produto = Produto::find($produto_id);
+        $ingrediente = Ingrediente::find($ingrediente_id);
+
+        if ($produto && $ingrediente) {
+            $produto->ingredientes()->attach($ingrediente->id);
+            return response()->json(['message' => 'Ingrediente adicionado ao produto com sucesso.']);
+        } else {
+            return response()->json(['error' => 'Produto ou ingrediente não encontrado.'], 404);
+        }
+    }
+
+    public function removerIngrediente($produto_id, $ingrediente_id)
+    {
+        $produto = Produto::find($produto_id);
+        $ingrediente = Ingrediente::find($ingrediente_id);
+
+        if ($produto && $ingrediente) {
+            $produto->ingredientes()->detach($ingrediente->id);
+            return response()->json(['message' => 'Ingrediente removido do produto com sucesso.']);
+        } else {
+            return response()->json(['error' => 'Produto ou ingrediente não encontrado.'], 404);
+        }
+    }
+
+    public function visualizarIngredientes($produto_id)
+    {
+        $produto = Produto::find($produto_id);
+
+        if ($produto) {
+            $ingredientes = $produto->ingredientes;
+            return response()->json(['ingredientes' => $ingredientes]);
+        } else {
+            return response()->json(['error' => 'Produto não encontrado.'], 404);
+        }
     }
 }
 

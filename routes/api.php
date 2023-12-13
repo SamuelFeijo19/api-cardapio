@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IngredienteController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\TipoProdutoController;
 use Illuminate\Http\Request;
@@ -49,4 +50,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/produtos/{id}', [ProdutoController::class, 'update']);
     Route::delete('/produtos/{id}', [ProdutoController::class, 'destroy']);
     //FIM ROTAS PARA PRODUTOS
+
+    //INICIO ROTAS PARA INGREDIENTE
+    Route::get('/ingredientes', [IngredienteController::class, 'index']);
+    Route::get('/ingredientes/{id}', [IngredienteController::class, 'show']);
+    Route::post('/ingredientes', [IngredienteController::class, 'store']);
+    Route::put('/ingredientes/{id}', [IngredienteController::class, 'update']);
+    Route::delete('/ingredientes/{id}', [IngredienteController::class, 'destroy']);
+    //FIM ROTAS PARA INGREDIENTES
+
+    // INICIO ROTAS PARA INGREDIENTES DE PRODUTO
+    Route::post('/produtos/{produto_id}/ingredientes/{ingrediente_id}', [ProdutoController::class, 'adicionarIngrediente']);
+    Route::delete('/produtos/{produto_id}/ingredientes/{ingrediente_id}', [ProdutoController::class, 'removerIngrediente']);
+    Route::get('/produtos/{produto_id}/ingredientes', [ProdutoController::class, 'visualizarIngredientes']);
+    // FIM DE ROTAS PARA INGREDIENTES DE PRODUTO
+
 });

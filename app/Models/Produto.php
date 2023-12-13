@@ -16,4 +16,9 @@ class Produto extends Model
     {
         return $this->belongsTo(TipoProduto::class, 'tipo_produto_id', 'id');
     }
+
+    public function ingredientes()
+    {
+        return $this->belongsToMany(Ingrediente::class, 'ingrediente_produto', 'produto_id', 'ingrediente_id');
+    }
 }
