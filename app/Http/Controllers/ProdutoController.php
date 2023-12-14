@@ -33,6 +33,7 @@ class ProdutoController extends Controller
             'descricao' => 'required|string',
             'preco' => 'required|numeric',
             'tipo_produto_id' => 'required|exists:tipo_produto,id',
+            'isDisponivel' => 'boolean'
         ]);
 
         $produto = Produto::create($request->all());
@@ -48,6 +49,7 @@ class ProdutoController extends Controller
             'descricao' => 'string',
             'preco' => 'numeric',
             'tipo_produto_id' => 'exists:tipo_produto,id',
+            'isDisponivel' => 'boolean'
         ]);
 
         $produto = Produto::find($id);
